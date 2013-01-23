@@ -53,35 +53,55 @@ module.exports = function(app, recipes_json, lastIndex, users){
     res.send(recipes);
   });
 
-  app.post('/api/recipe', function(req, res) {        
-    var recipe = req.body.recipe;
-    recipe.id = lastID++;
-    recipes[recipe.id] = recipe;
+  app.post('/api/recipe', function(req, res) {
+    if(req.session.logged) {
+      var recipe = req.body.recipe;
+      recipe.id = lastID++;
+      recipes[recipe.id] = recipe;  
+    } else {
+      res.status('404');
+      res.send('Not Found');  
+    }        
   });
 
   app.post('/api/recipe/:id', function(req, res) {
-    var recipe = req.body.recipe;
-    recipes[req.params.id] = recipe;
+    if(req.session.logged) {
+      var recipe = req.body.recipe;
+      recipes[req.params.id] = recipe;  
+    } else {
+      res.status('404');
+      res.send('Not Found');  
+    }    
   });
 
   app.get('/api/recipe/fav/:id', function(req, res) {
-    var fav_recipes = [];
-    for(var  key in recipes) {
-      if(recipes[key].favourite === true) {
-        fav_recipes.push(recipes[key]);
+    if(req.session.logged) {
+      var fav_recipes = [];
+      for(var  key in recipes) {
+        if(recipes[key].favourite === true) {
+          fav_recipes.push(recipes[key]);
+        }
       }
+      res.send(fav_recipes);  
+    } else {
+      res.status('404');
+      res.send('Not Found'); 
     }
-    res.send(fav_recipes);
   });
 
   app.post('/api/recipe/fav/:id', function(req, res) {
-    var id = req.params.id;
+    if(req.session.logged) {
+      var id = req.params.id;
 
-    if(recipes[id].favourite) {
-      recipes[id].favourite = false;
+      if(recipes[id].favourite) {
+        recipes[id].favourite = false;
+      } else {
+        recipes[id].favourite = true;
+      }
+      res.send('Done');  
     } else {
-      recipes[id].favourite = true;
-    }
-    res.send('Done');
+      res.status('404');
+      res.send('Not Found'); 
+    }    
   });
 };

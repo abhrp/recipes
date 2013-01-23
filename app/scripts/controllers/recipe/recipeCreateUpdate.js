@@ -1,21 +1,26 @@
 'use strict';
 
-recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$location', 'Recipe', 
-  function($scope, $routeParams, $location, Recipe) {
+recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$location', 'Recipe', 'LoginService', 
+  function($scope, $routeParams, $location, Recipe, LoginService) {
     $scope.update = false;
+    $scope.show = LoginService.login;
     
-    if($routeParams.id) {
-      $scope.update = true;
-      $scope.recipe = Recipe.get({id: $routeParams.id});
+    if(LoginService.login) {
+      if($routeParams.id) {
+        $scope.update = true;
+        $scope.recipe = Recipe.get({id: $routeParams.id});
+      } else {
+        $scope.recipe = {
+          ingredients: [],
+          method: [],
+          cooking_tips: [],
+          img_url: "images/default-recipe-image.png"
+        };  
+      }
     } else {
-      $scope.recipe = {
-        ingredients: [],
-        method: [],
-        cooking_tips: [],
-        img_url: "images/default-recipe-image.png"
-      };  
+      $location.path('/404');
     }
-
+    
     $scope.getImage = function() {
       $scope.recipe.img_url = $scope.new_image_url;
     };

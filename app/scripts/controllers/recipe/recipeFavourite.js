@@ -6,18 +6,22 @@ recipesApp.controller('RecipeFavouriteCtrl', ['$scope', '$http', '$location', 'L
     $scope.recipes = [];
  
     var loadRecipes = function() {
-      $http.get('/api/recipe/fav/' + LoginService.username).success(function(response) {
-        $scope.recipes = response;
+      if(LoginService.login) {
+        $http.get('/api/recipe/fav/' + LoginService.username).success(function(response) {
+          $scope.recipes = response;
 
-        if($scope.recipes.length > 0) {
-          $scope.filters = $scope.recipeFilterService.setFilterValues($scope.recipes);
-          $scope.filter = $scope.filters.filter;  
-        } else {
-          $scope.filters = null;
-          errorService.setError('You have no recently selected favourites');
-          $location.path('/');
-        }      
-      });
+          if($scope.recipes.length > 0) {
+            $scope.filters = $scope.recipeFilterService.setFilterValues($scope.recipes);
+            $scope.filter = $scope.filters.filter;  
+          } else {
+            $scope.filters = null;
+            errorService.setError('You have no recently selected favourites');
+            $location.path('/');
+          }      
+        });  
+      } else {
+        $location.path('/404');
+      }      
     };
     
     loadRecipes();

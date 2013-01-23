@@ -26,6 +26,8 @@ var recipesApp = angular.module('recipesApp', ["ngResource"])
       .when('/fav', {
         templateUrl: 'views/recipe/recipeIndex.html',
         controller: 'RecipeFavouriteCtrl'
+      }).when('/404', {
+        templateUrl: '404.html'
       })
       .otherwise({
         redirectTo: '/'
@@ -42,7 +44,8 @@ var recipesApp = angular.module('recipesApp', ["ngResource"])
         if(status === 401) {
           errorService.setError('Incorrect Credentials');
         }
-        else if(status == 400) {
+        else if(status == 404) {
+          $location.path('/404');
         }
         else if(status == 403) {
         }
