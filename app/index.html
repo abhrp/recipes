@@ -23,13 +23,14 @@
                                 <recipe-error alertMessage="errorService.errorMessage"></recipe-error>
                             </li>
                             <li>
-                                <a href="/#/">View Recipes</a>
+                                <strong><a href="/#/">View Recipes</a></strong>
                             </li>
+                            <li class="divider-vertical"> </li>
                             <li ng-hide="LoginService.login">
-                                <a href="/#/login" ng-click="errorService.clear()">Sign In</a>
+                                <strong><a href="/#/login" ng-click="errorService.clear()">Sign In</a></strong>
                             </li>
                             <li ng-show="LoginService.login">
-                                <a ng-click="logout()">Logout</a>
+                                <strong><a ng-click="logout()">Logout</a></strong>
                             </li>
                         </ul> 
                     </div>          
@@ -52,10 +53,10 @@
                 <div class="span2">
                     <ul>
                         <li ng-show="LoginService.login">
-                            <a href="/#/create">Create</a>
+                           <strong><a href="/#/create">Create</a></strong> 
                         </li><br/>
                         <li ng-show="LoginService.login">
-                            <a  ng-href="#/fav">Favourites</a>
+                            <strong><a ng-href="/#/fav">Favourites</a></strong>
                         </li><br/>
                     </ul>
                 </div>

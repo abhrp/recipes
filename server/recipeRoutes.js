@@ -1,8 +1,6 @@
-
-module.exports = function(app, recipes_json, favourites_json, lastIndex, users){
+module.exports = function(app, recipes_json, lastIndex, users){
   var lastID = lastIndex + 1;
   var recipes = recipes_json;
-  var favourites = favourites_json;
   
   app.get('/api/recipes', function(req, res) {
     

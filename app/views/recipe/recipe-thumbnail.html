@@ -2,5 +2,5 @@
   <img class="recipe-thumbnail img-polaroid" ng-src="{{asset.img_url}}" title="{{asset.title}}"> <br>
   <strong class="title"><span class="fav" ng-show="LoginService.login"><i class="icon-heart icon-white" ng-hide="asset.favourite" ng-click="toggleFavourite(asset)"></i><i class="icon-heart" ng-show="asset.favourite" ng-click="toggleFavourite(asset)"></i></span> {{asset.title}}</strong>
   <p>Author: {{asset.author}}</p>
-  <a ng-href="/#/view/{{asset.id}}">Go To Recipe...</a>
+  <strong><a ng-href="/#/view/{{asset.id}}">Go To Recipe...</a></strong>
 </div>  

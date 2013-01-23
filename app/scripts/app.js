@@ -127,6 +127,7 @@ var recipesApp = angular.module('recipesApp', ["ngResource"])
  
       recipeFilter : function(recipe) {
         var filters  = filterService.filters;
+     
         var valid = true;
         valid = valid && (filters.calories > 0 ? filters.calories >= recipe.calories : true);
         valid = valid && (filters.time > 0 ? filters.time >= recipe.time : true);

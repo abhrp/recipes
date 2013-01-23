@@ -1,4 +1,3 @@
-
 'use strict';
 
 recipesApp.controller('RecipeViewCtrl',['$scope', '$routeParams', 'Recipe', 'LoginService', 

@@ -1,4 +1,3 @@
-
 'use strict';
 
 recipesApp.controller('RecipeIndexCtrl',['$scope', '$http', 'Recipe', 'LoginService', '$location', 'recipeFilterService', 
