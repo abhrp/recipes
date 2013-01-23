@@ -1,0 +1,50 @@
+.recipe-thumbnail {
+  width: 400px;
+  height: 200px;
+}
+
+.create-recipe-thumbnail {
+  width: 300px;
+  height: 200px;
+}
+
+
+.recipe-list {
+  display: inline;
+  float: left;
+}
+
+.recipe-list div{
+  display: block;
+  padding: 10px;
+  border-spacing: 10px;
+  border: 1px;
+  margin-right: 5px;
+}
+
+.detail-thumbnail {
+  width: 400px;
+  height: 200px;
+}
+
+hr {
+  height: 10px;
+}
+
+.fav {
+  width: 20px;
+  height: 20px;
+}
+
+a {
+  color: white!important;
+}
+
+body {
+  background-color: #88bfe8!important;
+}
+
+.nav-collapse a{
+  color: #005580!important;
+}
+

@@ -1,0 +1,73 @@
+<div class="span12">
+  <div class="span4">
+    <img ng-src="{{recipe.img_url}}" title="{{recipe.title}}" class="detail-thumbnail img-polaroid">
+  </div>
+  <div class="span5">
+    <h4>Title : {{recipe.title}}  <a ng-href="#/update/{{recipe.id}}" ng-show="LoginService.login">Edit</a></h4> 
+    <h5> Author : {{recipe.author}}</h5>
+    <h6>Cuisine : {{recipe.cuisine}}</h6>
+    <h6>Time : {{recipe.time}}</h6>
+    <h6>Category: {{recipe.category}}</h6>
+    <h6 ng-show="recipe.calories">Calories : {{recipe.calories}}</h6>
+    <p><b>Description</b> : {{recipe.description}}</p> 
+  </div>
+  <div class="span11">
+    <div class="accordion" id="accordion2">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+            <strong>Ingredients</strong>
+          </a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse in">
+          <div class="accordion-inner">
+            <div class="span10">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="ingredient in recipe.ingredients">
+                    <td>{{ingredient.name}}</td>
+                    <td>{{ingredient.amount}}</td>
+                  </tr>
+                </tbody>
+              </table>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+            <strong>Method</strong>
+          </a>
+        </div>
+        <div id="collapseTwo" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <ol >
+              <li ng-repeat="step in recipe.method">{{step.step}}</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-group" ng-show="recipe.cooking_tips">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+            <strong>Some Tips</strong>
+          </a>
+        </div>
+        <div id="collapseThree" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <ol>
+              <li ng-repeat="tip in recipe.cooking_tips">{{tip.tip}}</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

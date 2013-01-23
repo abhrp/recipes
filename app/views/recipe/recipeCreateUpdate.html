@@ -1,0 +1,112 @@
+<div class="span12">
+  <div class="row-fluid">
+    <form class="form" name="recipeForm">
+      <div class="span4">
+        <div>
+          <img ng-src="{{recipe.img_url}}" class="create-recipe-thumbnail">
+        </div> <br/>
+        <div class="control-group">
+          <div class="control-label">
+            <label for="image-url" class="span3">Image URL</label>
+          </div>
+          <div class="controls">
+            <input id="image-url" type="text" ng-model="new_image_url">  
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn btn-info" ng-click="getImage()">Get Image</button>
+          <button ng-hide="update" class="btn btn-success" ng-click="submitRecipe()" ng-disabled="recipeForm.$invalid">Submit Your Recipe</button>
+          <button ng-show="update" class="btn btn-success" ng-click="saveRecipe()" ng-disabled="recipeForm.$invalid">Save Your Recipe</button>
+        </div>
+      </div>
+      <div class="span8">
+        <div class="span10 offset2">
+          <div class="control-group">
+            <div class="control-label">
+              <label for="recipe-author" class="span3"><strong class="text-warning">Author</strong></label>
+            </div>
+            <div class="controls">
+              <input id="recipe-author" type="text" ng-model="recipe.author">  
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="control-label">
+              <label for="recipe-title" class="span3"><strong class="text-warning">Title</strong></label>
+            </div>
+            <div class="controls">
+              <input id="recipe-title" type="text" ng-model="recipe.title" required>  
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="control-label">
+              <label for="recipe-cuisine" class="span3"><strong class="text-warning">Cuisine</strong></label>
+            </div>
+            <div class="controls">
+              <input id="recipe-cuisine" type="text" ng-model="recipe.cuisine" required>  
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="control-label">
+              <label for="recipe-time" class="span3"><strong class="text-warning">Time Taken</strong></label>
+            </div>
+            <div class="controls">
+              <input id="recipe-time" type="number" ng-model="recipe.time" required> mins.  
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="control-label">
+              <label for="recipe-category" class="span3"><strong class="text-warning">Category</strong></label>
+            </div>
+            <div class="controls">
+              <input id="recipe-category" type="text" ng-model="recipe.category" number>  
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="control-label">
+              <label for="recipe-calories" class="span3"><strong class="text-warning">Calories</strong></label>
+            </div>
+            <div class="controls">
+              <input id="recipe-calories" type="number" ng-model="recipe.calories">  
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="control-label">
+              <label for="recipe-description" class="span3"><strong class="text-warning">Describe It</strong></label>
+            </div>
+            <div class="controls">
+              <textarea id="recipe-description"  ng-model="recipe.description"></textarea>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="row-fluid">
+          <p class="lead pull-left"><strong>Add Ingredients</strong> <button ng-click="addIngredient()" class="btn btn-inverse">+</button></p>
+          <div class="span12 form-inline" ng-repeat="ingredient in recipe.ingredients">
+            <label >Name : </label>
+            <input type="text" ng-model="ingredient.name" required>
+            <label >Amount : </label>
+            <input  type="text" ng-model="ingredient.amount" required>
+            <button class="btn btn-danger" ng-click="removeIngredient($index)">X</button>
+          </div>
+        </div>
+        <div class="row-fluid">
+          <p class="lead pull-left"><strong>Steps</strong> <button ng-click="addCookingSteps()" class="btn btn-inverse">+</button></p>
+          <div class="span12 form-inline" ng-repeat="step in recipe.method" ng-hide="$routeParams.id">
+            <label >Step {{$index+1}}: </label>
+            <textarea  ng-model="step.step" required></textarea>
+            <button class="btn btn-danger" ng-click="removeCookingStep($index)">X</button>
+          </div>
+        </div>
+        <div class="row-fluid">
+          <p class="lead pull-left"><strong>Tips</strong> <button ng-click="addCookingTips()" class="btn btn-inverse">+</button></p>
+          <div class="span12 form-inline" ng-repeat="tip in recipe.cooking_tips">
+            <label >Tip {{$index+1}}: </label>
+            <textarea ng-model="tip.tip" required></textarea>
+            <button class="btn btn-danger" ng-click="removeCookingTip($index)">X</button>
+          </div>
+        </div>
+     </div>
+    </form>
+  </div>
+</div>
