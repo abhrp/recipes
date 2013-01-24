@@ -1,8 +1,7 @@
 'use strict';
 
-recipesApp.controller('RecipeViewCtrl',['$scope', '$routeParams', 'Recipe', 'LoginService', 
-  function($scope, $routeParams, Recipe, LoginService) {
-    $scope.rating = null;
+recipesApp.controller('RecipeViewCtrl',['$scope', '$routeParams', 'Recipe', 
+  function($scope, $routeParams, Recipe) {
     $scope.recipe = Recipe.get({id: $routeParams.id});
   }
 ]);

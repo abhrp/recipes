@@ -1,23 +1,16 @@
 'use strict';
 
-recipesApp.directive('recipeError',['errorService', function(errorService) {
+recipesApp.directive('recipeError', ['ErrorService', function(ErrorService) {
   return {
-    template: '<div class="alert alert-error alert-bar" ng-show="showAlert">' +
+    template: '<div class="alert alert-error alert-bar" ng-show="ErrorService.errorMessage">' +
      '<button type="button" class="close" ng-click="hideAlert()">x</button>' +
-      '{{errorService.errorMessage}}</div>',
+      '{{ErrorService.errorMessage}}</div>',
     restrict: 'E',
-    scope: {
-      alertMessage: '='
-    },
-    link: function postLink(scope, element, attrs) {
-      var alertMessageAttr = attrs['alertMessage'];
-      scope.errorService = errorService;
-      scope.showAlert = false;
-      scope.$watch('errorService.errorMessage', function(newVal) {
-        scope.showAlert = newVal ? true : false;
-      });
+    scope: {},
+    link: function(scope, element, attrs) {
+      scope.ErrorService = ErrorService;
       scope.hideAlert = function() {
-        scope.showAlert = false;
+        scope.ErrorService.clear();
       };
     }
   };

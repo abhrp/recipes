@@ -21,15 +21,10 @@ describe('Controller: RecipeCreateUpdateCtrl', function() {
     mockBackend = _$httpBackend_;
     RecipeCreateUpdateCtrl = $controller('RecipeCreateUpdateCtrl', {
       $scope: scope,
+      LoginService: {loggedin : true}
     });
   }));
-
-  it('should add the image', function() {
-      scope.new_image_url = 'img/sample.jpg';
-      scope.getImage();
-      expect(scope.recipe.img_url).toEqual(scope.new_image_url);
-  });
-
+  
   it('should add the ingredient', function() {
     var ingredients = [{name: null, amount: null}, 
                        {name: null, amount: null}];
@@ -101,7 +96,7 @@ describe('Controller: RecipeCreateUpdateCtrl', function() {
     scope.recipe = recipe;
     mockBackend.expectPOST('/api/recipe', {recipe: recipe}).respond(response);
 
-    scope.submitRecipe();
+    scope.saveRecipe();
     expect(scope.recipe).toEqual(recipe);
   });
 

@@ -3,23 +3,23 @@
     <span>
       <form class="form-search form-inline">
         <label class="text-success"><strong>Search</strong></label>
-        <input type="text" class="input-medium search-query" ng-model="filter.title">
+        <input type="text" class="input-medium search-query" ng-model="filters.title">
         <label for='recipe-cuisine'><strong>Cuisine :</strong></label>
-        <select class="span2" id='recipe-cuisine' ng-model="filter.cuisine" >
+        <select class="span2" id='recipe-cuisine' ng-model="filters.cuisine" >
           <option value="{{cuisine}}" ng-repeat="cuisine in filters.cuisines"> {{cuisine}}</option>     
           <option value="">All</option>
         </select>
         <label for='recipe-time'><strong>Time Taken :</strong></label> 
-        <input class="span2" type="number" ng-model="recipeFilterService.filters.time" max="{{filters.maxTime}}" min="0"> <b>mins.</b>
+        <input class="span2" type="number" ng-model="filters.time"  max="{{filters.maxTime}}" min="0"> <b>mins.</b>
         <label for='recipe-calories'><strong>Calories :</strong></label>
-        <input  class="span2" type="number" ng-model="recipeFilterService.filters.calories" max="{{filters.maxCalories}}" min="0">
+        <input  class="span2" type="number" ng-model="filters.calories" max="{{filters.maxCalories}}" min="0">
       </form>
     </span>
   </div>
   <div class="span12">
     <ul>
-      <li class="span4 thumbnails recipe-list" ng-repeat="rec in recipes | filter:recipeFilterService.recipeFilter">
-        <div recipe-thumbnail asset="rec"></div>
+      <li class="span4 thumbnails recipe-list" ng-repeat="rec in recipes | filter:RecipeFilterService.recipeFilter">
+        <div recipe-thumbnail asset="rec" favourites="favourites"></div>
       </li>
     </ul>
   </div>

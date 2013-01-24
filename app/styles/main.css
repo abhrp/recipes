@@ -48,3 +48,14 @@ body {
   color: #005580!important;
 }
 
+.nav-collapse {
+  text-align: center;
+}
+
+.alert-bar {
+  display: inline-block;
+  margin: 0!important;
+  padding: 5px!important;
+  padding-right: 25px!important;
+  margin-top: 4px!important;
+}

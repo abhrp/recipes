@@ -1,4 +1,4 @@
-<div class="span12" ng-show="show">
+<div class="span12">
   <div class="row-fluid">
     <form class="form" name="recipeForm">
       <div class="span4">
@@ -10,13 +10,12 @@
             <label for="image-url" class="span3">Image URL</label>
           </div>
           <div class="controls">
-            <input id="image-url" type="text" ng-model="new_image_url">  
+            <input id="image-url" type="text" ng-model="recipe.img_url">  
           </div>
         </div>
         <div class="controls">
-          <button class="btn btn-info" ng-click="getImage()">Get Image</button>
-          <button ng-hide="update" class="btn btn-success" ng-click="submitRecipe()" ng-disabled="recipeForm.$invalid">Submit Your Recipe</button>
-          <button ng-show="update" class="btn btn-success" ng-click="saveRecipe()" ng-disabled="recipeForm.$invalid">Save Your Recipe</button>
+          <button ng-hide="recipe.id" class="btn btn-success" ng-click="saveRecipe()" ng-disabled="recipeForm.$invalid">Submit Your Recipe</button>
+          <button ng-show="recipe.id" class="btn btn-success" ng-click="saveRecipe()" ng-disabled="recipeForm.$invalid">Save Your Recipe</button>
         </div>
       </div>
       <div class="span8">
@@ -31,7 +30,7 @@
           </div>
           <div class="control-group">
             <div class="control-label">
-              <label for="recipe-title" class="span3"><strong class="text-warning">Title</strong></label>
+              <label for="recipe-title" class="span3"><strong class="text-warning">Title</strong></label> 
             </div>
             <div class="controls">
               <input id="recipe-title" type="text" ng-model="recipe.title" required>  

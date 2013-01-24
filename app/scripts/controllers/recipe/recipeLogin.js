@@ -1,7 +1,7 @@
 'use strict';
 
-recipesApp.controller('RecipeLoginCtrl',['$scope', '$routeParams', '$http', '$location', 'LoginService', 'errorService', 
-  function($scope, $routeParams, $http, $location, LoginService, errorService) {
+recipesApp.controller('RecipeLoginCtrl',['$scope', '$http', '$location', 'LoginService', 'ErrorService', 
+  function($scope, $http, $location, LoginService, ErrorService) {
     $scope.username = '';
     $scope.password = '';
 
@@ -13,25 +13,19 @@ recipesApp.controller('RecipeLoginCtrl',['$scope', '$routeParams', '$http', '$lo
 
     $scope.login = function() {
       $http.post('/api/recipe/login', {username : $scope.username, password: $scope.password}).success(function(session) {
+        LoginService.authorized(session);
         if (session.logged === true) {
-          errorService.clear();
-          LoginService.authorized(session);
-        } else {
-          LoginService.authorized(session);
+          ErrorService.clear();
+          $location.path('/');
         }
-        $location.path('/');
       });
     };
 
     $scope.logout = function() {
-      $http.get('/api/recipe/login').success(function(res) {
+      $http.post('/api/recipe/logout').success(function(res) {
         LoginService.authorized(false);
         $location.path('/');
       });
     };
-
-    $scope.$on('event:goToLogin', function() {
-     $location.path('/login');
-    }); 
   }
 ]);

@@ -5,23 +5,22 @@ recipesApp.directive('recipeThumbnail', ['LoginService', '$http', function(Login
     templateUrl: 'views/recipe/recipe-thumbnail.html',
     restrict: 'A',
     scope: {
-      asset: '='
+      asset: '=',
+      favourites: '='
     },
     link: function(scope, elem, attrs) {
       scope.LoginService = LoginService;
 
-      scope.toggleFavourite = function(recipe) {
+      scope.toggleFavourite = function() {
         var response = null;       
-        $http.post('/api/recipe/fav/' + recipe.id).success(function(res) {
-          response = res;
-          if(recipe.favourite) {
-            recipe.favourite = false;
-          } else {
-            recipe.favourite = true;
-          }
+        $http.post('/api/favourites/' + scope.asset.id).success(function(res) {
           scope.$emit('event:favouriteChange');
         });
       }
+      
+      scope.isFavourite = function() {
+        return scope.favourites.indexOf(scope.asset.id) >= 0;
+      };
     }
   };
 }]);

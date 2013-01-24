@@ -23,7 +23,8 @@ describe('Controller: RecipeCreateUpdateCtrl', function() {
 
     RecipeCreateUpdateCtrl = $controller('RecipeCreateUpdateCtrl', {
       $scope: scope,
-      $routeParams : {id: 1}
+      $routeParams : {id: 1}, 
+      LoginService: {loggedin: true}
     });
   }));
 

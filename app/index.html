@@ -18,18 +18,16 @@
             <div class="navbar-inner">
                 <div class="container">
                     <div class="nav-collapse">
+                        <recipe-error></recipe-error>
                         <ul class="nav pull-right">
-                             <li>
-                                <recipe-error alertMessage="errorService.errorMessage"></recipe-error>
-                            </li>
                             <li>
                                 <strong><a href="/#/">View Recipes</a></strong>
                             </li>
                             <li class="divider-vertical"> </li>
-                            <li ng-hide="LoginService.login">
+                            <li ng-hide="LoginService.loggedin">
                                 <strong><a href="/#/login" ng-click="errorService.clear()">Sign In</a></strong>
                             </li>
-                            <li ng-show="LoginService.login">
+                            <li ng-show="LoginService.loggedin">
                                 <strong><a ng-click="logout()">Logout</a></strong>
                             </li>
                         </ul> 
@@ -52,10 +50,10 @@
             <div class="row-fluid">
                 <div class="span2">
                     <ul>
-                        <li ng-show="LoginService.login">
+                        <li ng-show="LoginService.loggedin">
                            <strong><a href="/#/create">Create</a></strong> 
                         </li><br/>
-                        <li ng-show="LoginService.login">
+                        <li ng-show="LoginService.loggedin">
                             <strong><a ng-href="/#/fav">Favourites</a></strong>
                         </li><br/>
                     </ul>
@@ -80,16 +78,17 @@
         <script src="scripts/directives/recipeThumbnail.js"></script>
         <script src="scripts/controllers/recipe/recipeLogin.js"></script>
         <script src="scripts/controllers/recipe/recipeFavourite.js"></script>
+        <script src="scripts/directives/recipeError.js"></script>
 
      
         <!-- endbuild -->
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
+        <!--<script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
+        </script>-->
     </body>
 </html>

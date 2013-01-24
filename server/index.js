@@ -18,8 +18,10 @@ Object.keys(recipes_json).forEach(function(val) {
 
 app.use(express.bodyParser());
 
-var users = [{'username': 'abhiroop', 'password': 'abhi123'}, 
-             {'username': 'chefcook', 'password': 'chef123'}];
+var users = {
+  'abhiroop': { 'password': 'abhi123', favourites: ['2','3'] }, 
+  'chefcook': { 'password': 'chef123', favourites: ['1', '2', '3'] }
+};
 
 require('./recipeRoutes')(app, recipes_json, lastIndex, users);
 /* Required Route Files */ 

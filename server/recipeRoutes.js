@@ -1,56 +1,57 @@
-module.exports = function(app, recipes_json, lastIndex, users){
+module.exports = function(app, recipes_json, lastIndex, users_json){
   var lastID = lastIndex + 1;
   var recipes = recipes_json;
+  var users = users_json;
   
-  app.get('/api/recipes', function(req, res) {
-    
-  });
-
+ 
   app.post('/api/recipe/login', function(req, res) {
     var username = req.body.username;
     var password = req.body.password;
-    var flag = 0;
 
-    for(var i=0; i<users.length; i++) {
-      if(username === users[i].username && password === users[i].password) {
-        req.session.logged = true;
-        req.session.username = username;
-        req.session.password = password;
-        flag = 1;
-        break;
-      }
-    }
-
-    if(flag === 1) {
-      res.send(req.session);
+    if (users[username] && users[username].password === password) {
+      req.session.logged = true;
+      req.session.username = username;
+      req.session.password = password;
     } else {
       req.session.logged = false;
       res.status(401);
-      res.send(req.session);
     }
+    
+    res.send(req.session);
   });
 
   app.post('/api/recipe/session', function(req, res) {
     res.send(req.session);
   });
 
-  app.get('/api/recipe/login', function(req, res) {
+  app.post('/api/recipe/logout', function(req, res) {
     req.session.logged = false;
     req.session.username = null;
     req.session.password = null;
     res.send(req.session);
   });
 
-  app.put('/api/recipe/:id', function(req, res) {
-
-  });
+ 
 
   app.get('/api/recipe/:id', function(req, res) {
     res.send(recipes[req.params.id]);
   });
 
   app.get('/api/recipe', function(req, res) {
-    res.send(recipes);
+    if (req.query['ids']) {
+      var ids = req.query['ids'].split(',');
+      var to_send = [];
+      for (var i = 0; i < ids.length; i++) {
+        var rec = recipes[ids[i]];
+        if (rec) {
+          to_send.push(rec);
+        }
+      }
+      res.send(to_send);
+    } else {
+      res.send(recipes);  
+    }
+    
   });
 
   app.post('/api/recipe', function(req, res) {
@@ -74,30 +75,29 @@ module.exports = function(app, recipes_json, lastIndex, users){
     }    
   });
 
-  app.get('/api/recipe/fav/:id', function(req, res) {
+  app.get('/api/favourites', function(req, res) {
     if(req.session.logged) {
-      var fav_recipes = [];
-      for(var  key in recipes) {
-        if(recipes[key].favourite === true) {
-          fav_recipes.push(recipes[key]);
-        }
-      }
-      res.send(fav_recipes);  
+      var favourites = users[req.session.username].favourites;
+      res.send(favourites);  
     } else {
       res.status('404');
       res.send('Not Found'); 
     }
   });
 
-  app.post('/api/recipe/fav/:id', function(req, res) {
+  app.post('/api/favourites/:id', function(req, res) {
     if(req.session.logged) {
       var id = req.params.id;
 
-      if(recipes[id].favourite) {
-        recipes[id].favourite = false;
+      var favourites = users[req.session.username].favourites;
+      var curId = favourites.indexOf(id);
+
+      if (curId >= 0) {
+        favourites.splice(curId, 1);
       } else {
-        recipes[id].favourite = true;
+        favourites.push(id);
       }
+
       res.send('Done');  
     } else {
       res.status('404');

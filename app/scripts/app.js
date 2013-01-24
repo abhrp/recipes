@@ -33,7 +33,8 @@ var recipesApp = angular.module('recipesApp', ["ngResource"])
         redirectTo: '/'
       });
 
-    $httpProvider.responseInterceptors.push(['$rootScope', '$q', 'errorService', function(scope, $q, errorService) {
+    $httpProvider.responseInterceptors.push(['$rootScope', '$q', 'ErrorService', '$location', 
+      function(scope, $q, ErrorService, $location) {
       
       function success(response) {
         return response;
@@ -42,7 +43,7 @@ var recipesApp = angular.module('recipesApp', ["ngResource"])
       function error(response) {
         var status = response.status;
         if(status === 401) {
-          errorService.setError('Incorrect Credentials');
+          ErrorService.setError('Incorrect Credentials');
         }
         else if(status == 404) {
           $location.path('/404');
@@ -64,16 +65,16 @@ var recipesApp = angular.module('recipesApp', ["ngResource"])
 
   recipesApp.service('LoginService', function() {
     return {
-      login: false,
+      loggedin: false,
       username: null,
       authorized: function(login) {
-        this.login = login.logged;
+        this.loggedin = login.logged;
         this.username = login.username;
       }
     };
   });
 
-  recipesApp.service('errorService', function() {
+  recipesApp.service('ErrorService', function() {
     return {
       errorMessage: null,
       setError: function(msg) {
@@ -85,52 +86,43 @@ var recipesApp = angular.module('recipesApp', ["ngResource"])
     };
   });
 
-  recipesApp.service('recipeFilterService', function() {
+  recipesApp.service('RecipeFilterService', function() {
     var maxCalories = 0,
         maxTime = 0,
         filter = null;
            
-    var updateMax = function(value, maxValue) {
-      if(value > maxValue) {
-        maxValue = value;
-      }
-      return maxValue;
+    var getMax = function(val1, val2) {
+      return val1 > val2 ? val1 : val2;
     };
 
     var filterService =  {
-
       setFilterValues: function(recipes) {
-        if(recipes.length != 0) {
-          maxCalories = recipes[0].calories;
-          maxTime = recipes[0].time;
-
-          var c=[];
-          var filterValues = {};
-    
-          for (var i=0; i<recipes.length; i++) {
-            c.push(recipes[i].cuisine);
-            maxTime = updateMax(recipes[i].time, maxTime);
-            maxCalories = updateMax(recipes[i].calories, maxCalories);
-          }
-
-          filterValues.cuisines = _.uniq(c);
-
-          filterValues.maxCalories = maxCalories;
-          filterValues.maxTime = maxTime;
-          
-          filterValues.filter = {'title': '', 'cuisine': '', 'time': maxTime, 'calories' : maxCalories};
-          this.filters = filterValues.filter;
-          return filterValues;
-        } else {
-          return null;
+        var cuisines = [];
+ 
+        for (var i=0; i<recipes.length; i++) {
+          cuisines.push(recipes[i].cuisine);
+          maxTime = getMax(recipes[i].time, maxTime);
+          maxCalories = getMax(recipes[i].calories, maxCalories);
         }
+
+        var filterValues = {
+          cuisines: _(cuisines).uniq(),
+          maxCalories: maxCalories,
+          maxTime: maxTime,
+          title: '',
+          cuisine: '',
+          time: maxTime,
+          calories: maxCalories
+        };
+        this.filters = filterValues;
+        return filterValues;
       },
  
       filters: {},
  
       recipeFilter : function(recipe) {
         var filters  = filterService.filters;
-     
+
         var valid = true;
         valid = valid && (filters.calories > 0 ? filters.calories >= recipe.calories : true);
         valid = valid && (filters.time > 0 ? filters.time >= recipe.time : true);

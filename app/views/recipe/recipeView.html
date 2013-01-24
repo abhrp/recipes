@@ -3,7 +3,7 @@
     <img ng-src="{{recipe.img_url}}" title="{{recipe.title}}" class="detail-thumbnail img-polaroid">
   </div>
   <div class="span5">
-    <h4>Title : {{recipe.title}}  <a ng-href="#/update/{{recipe.id}}" ng-show="LoginService.login">Edit</a></h4> 
+    <h4>Title : {{recipe.title}}  <a ng-href="#/update/{{recipe.id}}" ng-show="LoginService.loggedin">Edit</a></h4> 
     <h5> Author : {{recipe.author}}</h5>
     <h6>Cuisine : {{recipe.cuisine}}</h6>
     <h6>Time : {{recipe.time}}</h6>

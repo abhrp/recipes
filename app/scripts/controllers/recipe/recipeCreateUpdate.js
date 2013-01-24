@@ -2,12 +2,8 @@
 
 recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$location', 'Recipe', 'LoginService', 
   function($scope, $routeParams, $location, Recipe, LoginService) {
-    $scope.update = false;
-    $scope.show = LoginService.login;
-    
-    if(LoginService.login) {
+    if(LoginService.loggedin) {
       if($routeParams.id) {
-        $scope.update = true;
         $scope.recipe = Recipe.get({id: $routeParams.id});
       } else {
         $scope.recipe = {
@@ -21,10 +17,6 @@ recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$loca
       $location.path('/404');
     }
     
-    $scope.getImage = function() {
-      $scope.recipe.img_url = $scope.new_image_url;
-    };
-
     $scope.addIngredient = function() {
       $scope.recipe.ingredients.push({name: null, amount: null});
     };
@@ -49,14 +41,10 @@ recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$loca
       $scope.recipe.cooking_tips.splice(index, 1);
     };
     
-    $scope.submitRecipe = function() {
-      Recipe.save({}, {recipe: $scope.recipe});
-      $location.path('/');
-    };
-
     $scope.saveRecipe = function() {
-      Recipe.save({id: $routeParams.id}, {recipe: $scope.recipe}); 
-      $location.path('/');
+      Recipe.save({id: $scope.recipe.id}, {recipe: $scope.recipe}, function(response) {
+        $location.path('/');  
+      });
     };
   }
 ]);
