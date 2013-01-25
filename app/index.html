@@ -21,14 +21,14 @@
                         <recipe-error></recipe-error>
                         <ul class="nav pull-right">
                             <li>
-                                <strong><a href="/#/">View Recipes</a></strong>
+                                <strong><a href="/" id="view">View Recipes</a></strong>
                             </li>
                             <li class="divider-vertical"> </li>
                             <li ng-hide="LoginService.loggedin">
-                                <strong><a href="/#/login" ng-click="errorService.clear()">Sign In</a></strong>
+                                <strong><a href="/#login" id="signin" ng-click="errorService.clear()">Sign In</a></strong>
                             </li>
                             <li ng-show="LoginService.loggedin">
-                                <strong><a ng-click="logout()">Logout</a></strong>
+                                <strong><a id="logout" ng-click="logout()">Logout</a></strong>
                             </li>
                         </ul> 
                     </div>          
@@ -51,10 +51,10 @@
                 <div class="span2">
                     <ul>
                         <li ng-show="LoginService.loggedin">
-                           <strong><a href="/#/create">Create</a></strong> 
+                           <strong><a id="create" href="/#/create">Create</a></strong> 
                         </li><br/>
                         <li ng-show="LoginService.loggedin">
-                            <strong><a ng-href="/#/fav">Favourites</a></strong>
+                            <strong><a id="favourites" ng-href="/#/fav">Favourites</a></strong>
                         </li><br/>
                     </ul>
                 </div>

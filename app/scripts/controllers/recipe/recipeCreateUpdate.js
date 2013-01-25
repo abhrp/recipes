@@ -1,6 +1,6 @@
 'use strict';
 
-recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$location', 'Recipe', 'LoginService', 
+recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$location', 'Recipe', 'LoginService',
   function($scope, $routeParams, $location, Recipe, LoginService) {
     if(LoginService.loggedin) {
       if($routeParams.id) {
@@ -43,6 +43,7 @@ recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$loca
     
     $scope.saveRecipe = function() {
       Recipe.save({id: $scope.recipe.id}, {recipe: $scope.recipe}, function(response) {
+        console.log('Create Response : ',response);
         $location.path('/');  
       });
     };

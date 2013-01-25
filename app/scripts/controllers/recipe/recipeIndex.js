@@ -5,7 +5,8 @@ recipesApp.controller('RecipeIndexCtrl',['$scope', 'Recipe', 'RecipeFilterServic
     $scope.RecipeFilterService = RecipeFilterService;
     $scope.filters = {};
     $scope.favourites = [];
-    
+    $scope.recipes = [];
+
     var loadRecipes = function() {
       $scope.recipes = Recipe.query(function(response) {
         $scope.filters = $scope.RecipeFilterService.setFilterValues(response);

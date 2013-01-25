@@ -1,6 +1,6 @@
 
 /**
- * @license AngularJS v1.0.1
+ * @license AngularJS v1.0.2
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
  *
@@ -637,7 +637,7 @@ angular.mock.dump = function(object) {
  * development please see {@link ngMockE2E.$httpBackend e2e $httpBackend mock}.
  *
  * During unit testing, we want our unit tests to run quickly and have no external dependencies so
- * we donâ€™t want to send {@link https://developer.mozilla.org/en/xmlhttprequest XHR} or
+ * we don’t want to send {@link https://developer.mozilla.org/en/xmlhttprequest XHR} or
  * {@link http://en.wikipedia.org/wiki/JSONP JSONP} requests to a real server. All we really need is
  * to verify whether a certain request has been sent or not, or alternatively just let the
  * application make requests, respond with pre-trained responses and assert that the end result is
@@ -769,7 +769,7 @@ angular.mock.dump = function(object) {
 
 
    it('should send msg to server', function() {
-     // now you donâ€™t care about the authentication, but
+     // now you don’t care about the authentication, but
      // the controller will still send the request and
      // $httpBackend will respond without you having to
      // specify the expectation and response for this request
@@ -903,8 +903,8 @@ function createHttpBackendMock($delegate, $browser) {
    * @returns {requestHandler} Returns an object with `respond` method that control how a matched
    *   request is handled.
    *
-   *  - respond â€“ `{function([status,] data[, headers])|function(function(method, url, data, headers)}`
-   *    â€“ The respond method takes a set of static data to be returned or a function that can return
+   *  - respond – `{function([status,] data[, headers])|function(function(method, url, data, headers)}`
+   *    – The respond method takes a set of static data to be returned or a function that can return
    *    an array containing response status (number), response data (string) and response headers
    *    (Object).
    */
@@ -1022,8 +1022,8 @@ function createHttpBackendMock($delegate, $browser) {
    * @returns {requestHandler} Returns an object with `respond` method that control how a matched
    *  request is handled.
    *
-   *  - respond â€“ `{function([status,] data[, headers])|function(function(method, url, data, headers)}`
-   *    â€“ The respond method takes a set of static data to be returned or a function that can return
+   *  - respond – `{function([status,] data[, headers])|function(function(method, url, data, headers)}`
+   *    – The respond method takes a set of static data to be returned or a function that can return
    *    an array containing response status (number), response data (string) and response headers
    *    (Object).
    */
@@ -1450,11 +1450,11 @@ angular.module('ngMockE2E', ['ng']).config(function($provide) {
  * @returns {requestHandler} Returns an object with `respond` and `passThrough` methods that
  *   control how a matched request is handled.
  *
- *  - respond â€“ `{function([status,] data[, headers])|function(function(method, url, data, headers)}`
- *    â€“ The respond method takes a set of static data to be returned or a function that can return
+ *  - respond – `{function([status,] data[, headers])|function(function(method, url, data, headers)}`
+ *    – The respond method takes a set of static data to be returned or a function that can return
  *    an array containing response status (number), response data (string) and response headers
  *    (Object).
- *  - passThrough â€“ `{function()}` â€“ Any request matching a backend definition with `passThrough`
+ *  - passThrough – `{function()}` – Any request matching a backend definition with `passThrough`
  *    handler, will be pass through to the real backend (an XHR request will be made to the
  *    server.
  */
@@ -1591,9 +1591,29 @@ window.jasmine && (function(window) {
 
   afterEach(function() {
     var spec = getCurrentSpec();
+    var injector = spec.$injector;
+
     spec.$injector = null;
     spec.$modules = null;
+
+    if (injector) {
+      injector.get('$rootElement').unbind();
+      injector.get('$browser').pollFns.length = 0;
+    }
+
     angular.mock.clearDataCache();
+
+    // clean up jquery's fragment cache
+    angular.forEach(angular.element.fragments, function(val, key) {
+      delete angular.element.fragments[key];
+    });
+
+    MockXhr.$$lastInstance = null;
+
+    angular.forEach(angular.callbacks, function(val, key) {
+      delete angular.callbacks[key];
+    });
+    angular.callbacks.counter = 0;
   });
 
   function getCurrentSpec() {
@@ -1694,7 +1714,7 @@ window.jasmine && (function(window) {
    */
   window.inject = angular.mock.inject = function() {
     var blockFns = Array.prototype.slice.call(arguments, 0);
-    var stack = new Error('Declaration Location').stack;
+    var errorForStack = new Error('Declaration Location');
     return isSpecRunning() ? workFn() : workFn;
     /////////////////////
     function workFn() {
@@ -1710,10 +1730,12 @@ window.jasmine && (function(window) {
         try {
           injector.invoke(blockFns[i] || angular.noop, this);
         } catch (e) {
-          if(e.stack) e.stack +=  '\n' + stack;
+          if(e.stack) e.stack +=  '\n' + errorForStack.stack;
           throw e;
+        } finally {
+          errorForStack = null;
         }
       }
     }
-  }
+  };
 })(window);

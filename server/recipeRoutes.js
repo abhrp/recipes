@@ -1,6 +1,7 @@
-module.exports = function(app, recipes_json, lastIndex, users_json){
-  var lastID = lastIndex + 1;
-  var recipes = recipes_json;
+module.exports = function(app, load_json, users_json){
+  var json_index = load_json();
+  var lastID = json_index.index + 1;
+  var recipes = json_index.json;
   var users = users_json;
   
  
@@ -31,7 +32,19 @@ module.exports = function(app, recipes_json, lastIndex, users_json){
     res.send(req.session);
   });
 
- 
+  app.get('/api/recipe/reload', function(req, res) {
+    users =  {
+    'abhiroop': { 'password': 'abhi123', favourites: ['2','3'] }, 
+    'chefcook': { 'password': 'chef123', favourites: ['1', '2', '3'] }
+    };
+    json_index = load_json();
+    recipes = json_index.json;
+    lastID = json_index.index + 1;
+    req.session.logged = false;
+    req.session.username = null;
+    req.session.password = null;
+    res.send('done');
+  });
 
   app.get('/api/recipe/:id', function(req, res) {
     res.send(recipes[req.params.id]);
@@ -58,7 +71,8 @@ module.exports = function(app, recipes_json, lastIndex, users_json){
     if(req.session.logged) {
       var recipe = req.body.recipe;
       recipe.id = lastID++;
-      recipes[recipe.id] = recipe;  
+      recipes[recipe.id] = recipe;
+      res.send('Done : Created');  
     } else {
       res.status('404');
       res.send('Not Found');  
@@ -68,7 +82,8 @@ module.exports = function(app, recipes_json, lastIndex, users_json){
   app.post('/api/recipe/:id', function(req, res) {
     if(req.session.logged) {
       var recipe = req.body.recipe;
-      recipes[req.params.id] = recipe;  
+      recipes[req.params.id] = recipe;
+      res.send('Done : Update');  
     } else {
       res.status('404');
       res.send('Not Found');  
@@ -97,7 +112,6 @@ module.exports = function(app, recipes_json, lastIndex, users_json){
       } else {
         favourites.push(id);
       }
-
       res.send('Done');  
     } else {
       res.status('404');
