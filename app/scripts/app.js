@@ -1,15 +1,18 @@
 'use strict';
 
 var recipesApp = angular.module('recipesApp', ["ngResource"])
-  .config(['$routeProvider', '$httpProvider',  function($routeProvider, $httpProvider) {
+  .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/recipe/recipeIndex.html',
         controller: 'RecipeIndexCtrl',
+        
+        
       })
       .when('/create', {
         templateUrl: 'views/recipe/recipeCreateUpdate.html',
-        controller: 'RecipeCreateUpdateCtrl'
+        controller: 'RecipeCreateUpdateCtrl',
+        
       })
       .when('/update/:id', {
         templateUrl: 'views/recipe/recipeCreateUpdate.html',
@@ -17,7 +20,8 @@ var recipesApp = angular.module('recipesApp', ["ngResource"])
       })
       .when('/view/:id', {
         templateUrl: 'views/recipe/recipeView.html',
-        controller: 'RecipeViewCtrl'
+        controller: 'RecipeViewCtrl',
+        
       })
       .when('/login', {
         templateUrl: 'views/recipe/recipeLogin.html',

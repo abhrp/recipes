@@ -2,8 +2,8 @@
   <div class="span12">
     <span>
       <form class="form-search form-inline">
-        <label class="text-success"><strong>Search</strong></label>
-        <input type="text" class="input-medium search-query" ng-model="filters.title">
+        <label  class="text-success"><strong>Search</strong></label>
+        <input  type="text" class="input-medium search-query" ng-model="filters.title">
         <label for='recipe-cuisine'><strong>Cuisine :</strong></label>
         <select class="span2" id='recipe-cuisine' ng-model="filters.cuisine" >
           <option value="{{cuisine}}" ng-repeat="cuisine in filters.cuisines"> {{cuisine}}</option>     
@@ -17,7 +17,7 @@
     </span>
   </div>
   <div class="span12">
-    <ul>
+    <ul class="recipes-list">
       <li class="span4 thumbnails recipe-list" ng-repeat="rec in recipes | filter:RecipeFilterService.recipeFilter">
         <div recipe-thumbnail asset="rec" favourites="favourites"></div>
       </li>

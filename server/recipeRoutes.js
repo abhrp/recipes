@@ -31,7 +31,17 @@ module.exports = function(app, recipes_json, lastIndex, users_json){
     res.send(req.session);
   });
 
- 
+  app.get('/api/recipe/reload', function(req, res) {
+   
+   
+    users =  {
+    'abhiroop': { 'password': 'abhi123', favourites: ['2','3'] }, 
+    'chefcook': { 'password': 'chef123', favourites: ['1', '2', '3'] }
+    };
+
+    res.send('done');
+    
+  });
 
   app.get('/api/recipe/:id', function(req, res) {
     res.send(recipes[req.params.id]);

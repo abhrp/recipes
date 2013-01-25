@@ -1,6 +1,6 @@
 'use strict';
 
-recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$location', 'Recipe', 'LoginService', 
+recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$location', 'Recipe', 'LoginService',
   function($scope, $routeParams, $location, Recipe, LoginService) {
     if(LoginService.loggedin) {
       if($routeParams.id) {
