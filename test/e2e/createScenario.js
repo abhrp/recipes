@@ -19,11 +19,10 @@ angular.scenario.dsl('repeaterInput', function() {
 describe('Create Recipe Flow', function() {
   beforeEach(function() {
     browser().navigateTo('/api/recipe/reload');
-    browser().navigateTo('/api/recipe/logout');
     browser().navigateTo('/index.html#login');
     input('username').enter('abhiroop');
     input('password').enter('abhi123');
-    element('.btn-success', 'Click on login').click();
+    element('.login', 'Click on login').click();
   });
 
   it('should display the create page if clicked on create option', function() {
@@ -33,9 +32,9 @@ describe('Create Recipe Flow', function() {
 
   it('should display the create form with default values', function() {
     element('#create', 'Click on Create option').click();
-    expect(element('.create-recipe-thumbnail').attr('src')).toEqual('images/default-recipe-image.png');
-    expect(element('.submit').css('display')).toEqual('inline-block');
-    expect(element('.submit').attr('disabled')).toEqual('disabled');
+    expect(element('.create_recipe_thumbnail').attr('src')).toEqual('images/default-recipe-image.png');
+    expect(element('#submit').css('display')).toEqual('inline-block');
+    expect(element('#submit').attr('disabled')).toEqual('disabled');
     expect(element('#recipe-author').attr('value')).toEqual('');
     expect(element('#recipe-title').attr('value')).toEqual('');
     expect(element('#recipe-cuisine').attr('value')).toEqual('');
@@ -66,7 +65,7 @@ describe('Create Recipe Flow', function() {
     expect(repeater('#tips').count()).toEqual(0);
   });
 
-  iit('should create a new recipe', function() {
+  it('should create a new recipe', function() {
     element('#create', 'Click on Create option').click();
     input('recipe.img_url').enter('http://www.tarladalal.com/members/9306/images/burritos-4622.jpg');
     input('recipe.author').enter('Tarla Dalal');
@@ -92,6 +91,6 @@ describe('Create Recipe Flow', function() {
     repeaterInput("#tip1 .tip", "Enter Cookign Tip").enter('Serve with cold drinks');
     element('#submit', 'Enter the Recipe').click();
     expect(browser().location().url()).toEqual('/');
-    expect(repeater('recipe-list').count()).toEqual(5);    
+    expect(repeater('.recipe-list').count()).toEqual(5);    
   });
 });

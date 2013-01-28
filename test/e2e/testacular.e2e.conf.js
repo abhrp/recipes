@@ -5,7 +5,9 @@ files = [
   'indexScenario.js',
   'loginScenario.js',
   'favouritesScenario.js',
-  'createScenario.js'
+  'createScenario.js',
+  'viewScenario.js',
+  'editScenario.js'
 ];
 
 // list of files to exclude

@@ -1,11 +1,10 @@
 describe('Favourites Flow', function() {
   beforeEach(function() {
-    browser().navigateTo('/api/recipe/logout');
     browser().navigateTo('/api/recipe/reload');
     browser().navigateTo('/index.html#login');
     input('username').enter('abhiroop');
     input('password').enter('abhi123')
-    element('.btn-success', 'Click on Login Button').click();
+    element('.login', 'Click on Login Button').click();
   });
 
 
