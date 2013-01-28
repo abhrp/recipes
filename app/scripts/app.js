@@ -49,10 +49,10 @@ var recipesApp = angular.module('recipesApp', ["ngResource"])
         if(status === 401) {
           ErrorService.setError('Incorrect Credentials');
         }
-        else if(status == 404) {
+        else if(status === 404) {
           $location.path('/404');
         }
-        else if(status == 403) {
+        else if(status === 403) {
         }
         return response;
       }

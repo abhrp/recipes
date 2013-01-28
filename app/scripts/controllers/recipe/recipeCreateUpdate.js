@@ -43,6 +43,7 @@ recipesApp.controller('RecipeCreateUpdateCtrl',['$scope', '$routeParams', '$loca
     
     $scope.saveRecipe = function() {
       Recipe.save({id: $scope.recipe.id}, {recipe: $scope.recipe}, function(response) {
+        console.log('Create Response : ',response);
         $location.path('/');  
       });
     };
